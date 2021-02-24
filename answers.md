@@ -41,26 +41,42 @@ db.companies.find({},{},{$sort:{{number_of_employees: -1}}).limit(10)
 11. All the companies founded in the second semester of the year.
     Limit your search to 1000 companies.
 
+    db.companies.find({founded_month:{$gt:7}},{},{$limit:1000})
+    ===
+    
+    db.companies.find({founded_month:{$gt:7}}).limit(1000)
+
 12. All the companies founded before 2000 that have an acquisition amount of more than 10.000.000
+    
+    db.companies.find({$and: [  {"acquisition.price_amount":{$gt:10000000}}, {founded_year:{$lt:2000}} ] })
 
 13. All the companies that have been acquired after 2010, 
 order by the acquisition amount, and retrieve only their name and acquisition field.
     
-    db.companies.find({ "acquisition.acquired_year":{$gt: 2010} }, {name:1, acquisition:1}) .sort({"acquisition.price_amount":1})
+    db.companies.find({ "acquisition.acquired_year":{$gt: 2010} }, {name:1, acquisition:1}).sort({"acquisition.price_amount":1})
 
-14) Order the companies by their founded year, retrieving only their name and founded year.
+14. Order the companies by their founded year, retrieving only their name and founded year.
 
-15) All the companies that have been founded on the first seven days of the month, 
+    db.companies.find({},{name:1, founded_year:1}).sort({founded_year:1})
+
+15. All the companies that have been founded on the first seven days of the month, 
 including the seventh. 
 Sort them by their acquisition price in descending order. Limit the search to 10 documents.
 
-16) All the companies on the 'web' category that have more than 4000 employees. 
+    db.companies.find({founded_day: {$lte: 7}, {founded_day:1}).sort({"acquisitions.price_amount":-1}}).limit(10)
+
+16. All the companies on the 'web' category that have more than 4000 employees. 
 Sort them by the number of employees in ascending order.
 
-17) All the companies whose acquisition amount is more than 10.000.000 and the currency is 'EUR'.
+    db.companies.find({$and:[ {number_of_employees: {$gt:4000}}, {category_code: "web"}]},{category_code:1}).sort({number_of_employees:1})
+
+17. All the companies whose acquisition amount is more than 10.000.000 and the currency is 'EUR'.
+
+      db.companies.find({$and:[ {"acquisition.price_amount":{$gt: 10000000}}, {"acquisition.price_currency_code":"EUR"} ]})
 
 18) All the companies that have been acquired in the first trimester of the year. 
 Limit the search to 10 companies, and retrieve only their name and acquisition fields.
 
 19) All the companies that have been founded between 2000 and 2010, 
 but have not been acquired before 2011.
+    db.companies.find({$and: [  {"acquisition.price_amount":{$gt:10000000}}, {founded_year:{$lt:2000}} ] })
