@@ -41,7 +41,14 @@ db.companies.find({},{},{$sort:{{number_of_employees: -1}}).limit(10)
 11. All the companies founded in the second semester of the year.
     Limit your search to 1000 companies.
 
+    db.companies.find({founded_month:{$gt:7}},{},{$limit:1000})
+    ===
+    
+    db.companies.find({founded_month:{$gt:7}}).limit(1000)
+
 12. All the companies founded before 2000 that have an acquisition amount of more than 10.000.000
+
+    db.companies.find({$and: [  {"acquisition.price_amount":{$gt:10000000}}, {founded_year:{$lt:2000}} ] })
 
 13. All the companies that have been acquired after 2010,
     order by the a
