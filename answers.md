@@ -8,7 +8,6 @@
 
           db.companies.find({$and: [{founded_year: {$gte: 2000}}, {founded_year: {$lte: 2005}}]},{name:1,founded_year:1})
 
-
 4.  All the companies that had a Valuation Amount of more than 100.000.000
     and have been founded before 2010.
     Retrieve only the name and ipo fields.
@@ -20,16 +19,24 @@
 
             db.companies.find({"number_of_employees": {$lt: 1000}, "founded_year": {$lt: 2005}}, {}, $sort: {"number_of_employees": -1}, $limit: 10)
 
-6.  All the companies that don't include the partners field.
+<!-- 6.  All the companies that don't include the partners field. -->
 
 7.  All the companies that have a null type of value on the category_code field.
+
+db.companies.find({category_code: null})
 
 8.  All the companies that have at least 100 employees but less than 1000.
     Retrieve only the name and number of employees fields.
 
+    db.companies.find({number_of_employees: {$gte: 100, $lte: 1000}},{name:1, number_of_employees:1})
+
 9.  Order all the companies by their IPO price in descending order.
 
+    db.companies.find({},{},{$sort:{'ipo.valuation_amount': -1}})
+
 10. Retrieve the ten companies with most employees, order by the number of employees
+
+db.companies.find({},{},{$sort:{{number_of_employees: -1}}).limit(10)
 
 11. All the companies founded in the second semester of the year.
     Limit your search to 1000 companies.
