@@ -43,5 +43,24 @@ db.companies.find({},{},{$sort:{{number_of_employees: -1}}).limit(10)
 
 12. All the companies founded before 2000 that have an acquisition amount of more than 10.000.000
 
-13. All the companies that have been acquired after 2010,
-    order by the a
+13. All the companies that have been acquired after 2010, 
+order by the acquisition amount, and retrieve only their name and acquisition field.
+    
+    db.companies.find({ "acquisition.acquired_year":{$gt: 2010} }, {name:1, acquisition:1}) .sort({"acquisition.price_amount":1})
+
+14) Order the companies by their founded year, retrieving only their name and founded year.
+
+15) All the companies that have been founded on the first seven days of the month, 
+including the seventh. 
+Sort them by their acquisition price in descending order. Limit the search to 10 documents.
+
+16) All the companies on the 'web' category that have more than 4000 employees. 
+Sort them by the number of employees in ascending order.
+
+17) All the companies whose acquisition amount is more than 10.000.000 and the currency is 'EUR'.
+
+18) All the companies that have been acquired in the first trimester of the year. 
+Limit the search to 10 companies, and retrieve only their name and acquisition fields.
+
+19) All the companies that have been founded between 2000 and 2010, 
+but have not been acquired before 2011.
